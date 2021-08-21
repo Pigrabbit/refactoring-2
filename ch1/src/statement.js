@@ -1,4 +1,4 @@
-function statement(invoice, plays) {
+module.exports = function statement(invoice, plays) {
   let totalAmount = 0;
   let volumeCredits = 0;
   let result = `Statement (Customer: ${invoice.customer})\n`;
@@ -45,4 +45,4 @@ function statement(invoice, plays) {
   result += `Total: ${format(totalAmount / 100)}\n`;
   result += `Credits: ${volumeCredits}p\n`;
   return result;
-}
+};

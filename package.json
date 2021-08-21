@@ -1,0 +1,14 @@
+{
+  "name": "refactoring-2",
+  "version": "1.0.0",
+  "description": "Code and Summary from Refactoring 2nd edition",
+  "main": "index.js",
+  "author": "Donghyuk Kang <donghyuk1003+github@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}
