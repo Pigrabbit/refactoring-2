@@ -62,9 +62,7 @@ module.exports = function statement(invoice, plays) {
     totalAmount += amountFor(perf);
   }
 
-  let volumeCredits = totalVolumeCredits();
-
   result += `Total: ${usd(totalAmount)}\n`;
-  result += `Credits: ${volumeCredits}p\n`;
+  result += `Credits: ${totalVolumeCredits()}p\n`;
   return result;
 };
