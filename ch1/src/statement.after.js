@@ -53,6 +53,14 @@ module.exports = function statement(invoice, plays) {
     return volumeCredits;
   }
 
+  function totalAmount() {
+    let totalAmount = 0;
+    for (let perf of invoice.performances) {
+      totalAmount += amountFor(perf);
+    }
+    return totalAmount;
+  }
+
   for (let perf of invoice.performances) {
     // prints statement
     result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${
@@ -60,12 +68,7 @@ module.exports = function statement(invoice, plays) {
     } attendance)\n`;
   }
 
-  let totalAmount = 0;
-  for (let perf of invoice.performances) {
-    totalAmount += amountFor(perf);
-  }
-
-  result += `Total: ${usd(totalAmount)}\n`;
+  result += `Total: ${usd(totalAmount())}\n`;
   result += `Credits: ${totalVolumeCredits()}p\n`;
   return result;
 };
