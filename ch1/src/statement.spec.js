@@ -1,8 +1,8 @@
-const statementBefore = require("./statement.before");
-const statementAfter = require("./statement.after");
+import statementBefore from "./statement.before";
+import statementAfter from "./statement.after";
 
-const mockInvoices = require("./invoices.json");
-const mockPlays = require("./plays.json");
+import mockInvoices from "./invoices.json";
+import mockPlays from "./plays.json";
 
 describe("[before] statement function", () => {
   describe("invoice and play list is given", () => {

@@ -1,5 +1,15 @@
-module.exports = function statement(invoice, plays) {
+export default function statement(invoice, plays) {
   let result = `Statement (Customer: ${invoice.customer})\n`;
+  for (let perf of invoice.performances) {
+    // prints statement
+    result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${
+      perf.audience
+    } attendance)\n`;
+  }
+
+  result += `Total: ${usd(totalAmount())}\n`;
+  result += `Credits: ${totalVolumeCredits()}p\n`;
+  return result;
 
   function playFor(aPerformance) {
     return plays[aPerformance.playID];
@@ -60,15 +70,4 @@ module.exports = function statement(invoice, plays) {
     }
     return result;
   }
-
-  for (let perf of invoice.performances) {
-    // prints statement
-    result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${
-      perf.audience
-    } attendance)\n`;
-  }
-
-  result += `Total: ${usd(totalAmount())}\n`;
-  result += `Credits: ${totalVolumeCredits()}p\n`;
-  return result;
-};
+}
