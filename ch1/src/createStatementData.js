@@ -34,7 +34,14 @@ export default function createStatementData(invoice, plays) {
 }
 
 function createPerformanceCalculator(aPerformance, aPlay) {
-  return new PerformanceCalculator(aPerformance, aPlay);
+  switch (aPlay.type) {
+    case "tragedy":
+      return new TragedyCalculator(aPerformance, aPlay);
+    case "comedy":
+      return new ComedyCalculator(aPerformance, aPlay);
+    default:
+      throw new Error(`Unknown Genre: ${aPlay.type}`);
+  }
 }
 class PerformanceCalculator {
   constructor(aPerformance, aPlay) {
@@ -47,11 +54,7 @@ class PerformanceCalculator {
 
     switch (this.play.type) {
       case "tragedy":
-        result = 40000;
-        if (this.performance.audience > 30) {
-          result += 1000 * (this.performance.audience - 30);
-        }
-        break;
+        throw new Error("use TragedyCalculator class");
       case "comedy":
         result = 30000;
         if (this.performance.audience > 20) {
@@ -74,3 +77,15 @@ class PerformanceCalculator {
     return volumeCredits;
   }
 }
+
+class TragedyCalculator extends PerformanceCalculator {
+  get amount() {
+    let result = 40000;
+    if (this.performance.audience > 30) {
+      result += 1000 * (this.performance.audience - 30);
+    }
+    return result;
+  }
+}
+
+class ComedyCalculator extends PerformanceCalculator {}
