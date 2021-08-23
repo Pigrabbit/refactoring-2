@@ -2,6 +2,26 @@ export default function statement(invoice, plays) {
   const statementData = {};
   statementData.customer = invoice.customer;
   statementData.performances = invoice.performances.map(enrichPerformance);
+  statementData.totalAmount = totalAmount(statementData);
+  statementData.totalVolumeCredits = totalVolumeCredits(statementData);
+
+  return renderPlainText(statementData, plays);
+
+  function totalVolumeCredits(data) {
+    let result = 0;
+    for (let perf of data.performances) {
+      result += perf.volumeCredits;
+    }
+    return result;
+  }
+
+  function totalAmount(data) {
+    let result = 0;
+    for (let perf of data.performances) {
+      result += perf.amount;
+    }
+    return result;
+  }
 
   function enrichPerformance(aPerformance) {
     const result = Object.assign({}, aPerformance); // shallow copy
@@ -46,8 +66,6 @@ export default function statement(invoice, plays) {
       volumeCredits += Math.floor(aPerformance.audience / 5);
     return volumeCredits;
   }
-
-  return renderPlainText(statementData, plays);
 }
 
 function renderPlainText(data, plays) {
@@ -59,8 +77,8 @@ function renderPlainText(data, plays) {
     } attendance)\n`;
   }
 
-  result += `Total: ${usd(totalAmount())}\n`;
-  result += `Credits: ${totalVolumeCredits()}p\n`;
+  result += `Total: ${usd(data.totalAmount)}\n`;
+  result += `Credits: ${data.totalVolumeCredits}p\n`;
   return result;
 
   function usd(aNumber) {
@@ -69,21 +87,5 @@ function renderPlainText(data, plays) {
       currency: "USD",
       minimumFractionDigits: 2,
     }).format(aNumber / 100);
-  }
-
-  function totalVolumeCredits() {
-    let result = 0;
-    for (let perf of data.performances) {
-      result += perf.volumeCredits;
-    }
-    return result;
-  }
-
-  function totalAmount() {
-    let result = 0;
-    for (let perf of data.performances) {
-      result += perf.amount;
-    }
-    return result;
   }
 }
