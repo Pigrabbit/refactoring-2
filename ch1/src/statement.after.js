@@ -5,7 +5,12 @@ export default function statement(invoice, plays) {
 
   function enrichPerformance(aPerformance) {
     const result = Object.assign({}, aPerformance); // shallow copy
+    result.play = playFor(result);
     return result;
+  }
+
+  function playFor(aPerformance) {
+    return plays[aPerformance.playID];
   }
 
   return renderPlainText(statementData, plays);
@@ -15,7 +20,7 @@ function renderPlainText(data, plays) {
   let result = `Statement (Customer: ${data.customer})\n`;
   for (let perf of data.performances) {
     // prints statement
-    result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${
+    result += ` ${perf.play.name}: ${usd(amountFor(perf))} (${
       perf.audience
     } attendance)\n`;
   }
@@ -24,14 +29,10 @@ function renderPlainText(data, plays) {
   result += `Credits: ${totalVolumeCredits()}p\n`;
   return result;
 
-  function playFor(aPerformance) {
-    return plays[aPerformance.playID];
-  }
-
   function amountFor(aPerformance) {
     let result = 0;
 
-    switch (playFor(aPerformance).type) {
+    switch (aPerformance.play.type) {
       case "tragedy":
         result = 40000;
         if (aPerformance.audience > 30) {
@@ -55,7 +56,7 @@ function renderPlainText(data, plays) {
   function volumeCreditsFor(aPerformance) {
     let volumeCredits = 0;
     volumeCredits += Math.max(aPerformance.audience - 30, 0);
-    if (playFor(aPerformance).type === "comedy")
+    if (aPerformance.play.type === "comedy")
       volumeCredits += Math.floor(aPerformance.audience / 5);
     return volumeCredits;
   }
