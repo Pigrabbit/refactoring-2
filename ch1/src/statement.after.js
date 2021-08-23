@@ -37,8 +37,6 @@ module.exports = function statement(invoice, plays) {
   }
 
   for (let perf of invoice.performances) {
-    let thisAmount = amountFor(perf);
-
     // accumulate credits
     volumeCredits += Math.max(perf.audience - 30, 0);
     // add points for every 5 comedy audience
@@ -46,10 +44,10 @@ module.exports = function statement(invoice, plays) {
       volumeCredits += Math.floor(perf.audience / 5);
 
     // prints statement
-    result += ` ${playFor(perf).name}: ${format(thisAmount / 100)} (${
+    result += ` ${playFor(perf).name}: ${format(amountFor(perf) / 100)} (${
       perf.audience
     } attendance)\n`;
-    totalAmount += thisAmount;
+    totalAmount += amountFor(perf);
   }
 
   result += `Total: ${format(totalAmount / 100)}\n`;
