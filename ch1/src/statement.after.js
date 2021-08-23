@@ -7,6 +7,7 @@ export default function statement(invoice, plays) {
     const result = Object.assign({}, aPerformance); // shallow copy
     result.play = playFor(result);
     result.amount = amountFor(result);
+    result.volumeCredits = volumeCreditsFor(result);
     return result;
   }
 
@@ -38,6 +39,13 @@ export default function statement(invoice, plays) {
     return result;
   }
 
+  function volumeCreditsFor(aPerformance) {
+    let volumeCredits = 0;
+    volumeCredits += Math.max(aPerformance.audience - 30, 0);
+    if (aPerformance.play.type === "comedy")
+      volumeCredits += Math.floor(aPerformance.audience / 5);
+    return volumeCredits;
+  }
 
   return renderPlainText(statementData, plays);
 }
@@ -55,15 +63,6 @@ function renderPlainText(data, plays) {
   result += `Credits: ${totalVolumeCredits()}p\n`;
   return result;
 
-  
-  function volumeCreditsFor(aPerformance) {
-    let volumeCredits = 0;
-    volumeCredits += Math.max(aPerformance.audience - 30, 0);
-    if (aPerformance.play.type === "comedy")
-      volumeCredits += Math.floor(aPerformance.audience / 5);
-    return volumeCredits;
-  }
-
   function usd(aNumber) {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -75,7 +74,7 @@ function renderPlainText(data, plays) {
   function totalVolumeCredits() {
     let result = 0;
     for (let perf of data.performances) {
-      result += volumeCreditsFor(perf);
+      result += perf.volumeCredits;
     }
     return result;
   }
