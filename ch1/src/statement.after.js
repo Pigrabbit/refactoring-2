@@ -36,12 +36,16 @@ module.exports = function statement(invoice, plays) {
     return result;
   }
 
-  for (let perf of invoice.performances) {
-    // accumulate credits
+  function volumeCreditsFor(perf) {
+    let volumeCredits = 0;
     volumeCredits += Math.max(perf.audience - 30, 0);
-    // add points for every 5 comedy audience
     if (playFor(perf).type === "comedy")
       volumeCredits += Math.floor(perf.audience / 5);
+    return volumeCredits;
+  }
+
+  for (let perf of invoice.performances) {
+    volumeCredits += volumeCreditsFor(perf);
 
     // prints statement
     result += ` ${playFor(perf).name}: ${format(amountFor(perf) / 100)} (${
