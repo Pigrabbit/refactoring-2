@@ -1,5 +1,4 @@
 module.exports = function statement(invoice, plays) {
-  let totalAmount = 0;
   let result = `Statement (Customer: ${invoice.customer})\n`;
 
   function playFor(aPerformance) {
@@ -61,6 +60,7 @@ module.exports = function statement(invoice, plays) {
     } attendance)\n`;
   }
 
+  let totalAmount = 0;
   for (let perf of invoice.performances) {
     totalAmount += amountFor(perf);
   }
