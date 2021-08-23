@@ -8,8 +8,12 @@ module.exports = function statement(invoice, plays) {
     minimumFractionDigits: 2,
   }).format;
 
+  function playFor(aPerformance) {
+    return plays[aPerformance.playID];
+  }
+
   for (let perf of invoice.performances) {
-    const play = plays[perf.playID];
+    const play = playFor(perf);
     let thisAmount = amountFor(perf, play);
 
     // accumulate credits
