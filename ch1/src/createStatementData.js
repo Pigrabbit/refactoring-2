@@ -17,6 +17,10 @@ export default function createStatementData(invoice, plays) {
   }
 
   function enrichPerformance(aPerformance) {
+    const calculator = new PerformanceCalculator(
+      aPerformance,
+      playFor(aPerformance)
+    );
     const result = Object.assign({}, aPerformance); // shallow copy
     result.play = playFor(result);
     result.amount = amountFor(result);
@@ -58,5 +62,12 @@ export default function createStatementData(invoice, plays) {
     if (aPerformance.play.type === "comedy")
       volumeCredits += Math.floor(aPerformance.audience / 5);
     return volumeCredits;
+  }
+}
+
+class PerformanceCalculator {
+  constructor(aPerformance, aPlay) {
+    this.performance = aPerformance;
+    this.play = aPlay;
   }
 }
