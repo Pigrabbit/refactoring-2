@@ -7,7 +7,7 @@ module.exports = function statement(invoice, plays) {
     currency: "USD",
     minimumFractionDigits: 2,
   }).format;
-  
+
   function playFor(aPerformance) {
     return plays[aPerformance.playID];
   }
@@ -15,7 +15,7 @@ module.exports = function statement(invoice, plays) {
   function amountFor(aPerformance, play) {
     let result = 0;
 
-    switch (play.type) {
+    switch (playFor(aPerformance).type) {
       case "tragedy":
         result = 40000;
         if (aPerformance.audience > 30) {
@@ -30,7 +30,7 @@ module.exports = function statement(invoice, plays) {
         result += 300 * aPerformance.audience;
         break;
       default:
-        throw new Error(`Unknown Genre: ${play.type}`);
+        throw new Error(`Unknown Genre: ${playFor(aPerformance).type}`);
     }
 
     return result;
