@@ -21,3 +21,24 @@ describe("Province", () => {
     expect(asia.profit).toEqual(292);
   });
 });
+
+describe("Province with no producers", () => {
+  let noProducers;
+  beforeEach(() => {
+    const data = {
+      name: "No producers",
+      producers: [],
+      demand: 30,
+      price: 20,
+    };
+    noProducers = new Province(data);
+  });
+
+  it("shortfall", () => {
+    expect(noProducers.shortfall).toEqual(30);
+  });
+
+  it("profit", () => {
+    expect(noProducers.profit).toEqual(0);
+  });
+});
