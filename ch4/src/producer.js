@@ -3,7 +3,7 @@ export class Producer {
     this._province = aProvince;
     this._cost = data.cost;
     this._name = data.name;
-    this._production = data.production;
+    this._production = data.production || 0;
   }
 
   get name() {
@@ -22,7 +22,7 @@ export class Producer {
   }
   set production(amountStr) {
     const amount = parseInt(amountStr);
-    const newProduction = Number.isNaN ? 0 : amount;
+    const newProduction = Number.isNaN(amount) ? 0 : amount;
     this._province.totalProduction += newProduction - this._production;
     this._production = newProduction;
   }

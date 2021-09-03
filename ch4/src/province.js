@@ -2,7 +2,7 @@ import { Producer } from "./producer";
 export class Province {
   constructor(doc) {
     this._name = doc.name;
-    this._producers = doc.producers;
+    this._producers = [];
     this._totalProduction = 0;
     this._demand = doc.demand;
     this._price = doc.price;
