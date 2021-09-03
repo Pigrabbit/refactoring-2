@@ -20,6 +20,18 @@ describe("Province", () => {
     expect(asia.shortfall).toEqual(-6);
     expect(asia.profit).toEqual(292);
   });
+
+  it("zero demand", () => {
+    asia.demand = 0;
+    expect(asia.shortfall).toEqual(-25);
+    expect(asia.profit).toEqual(0);
+  });
+
+  it("negative demand", () => {
+    asia.demand = -10;
+    expect(asia.shortfall).toEqual(-35);
+    expect(asia.profit).toEqual(-100);
+  });
 });
 
 describe("Province with no producers", () => {
