@@ -16,14 +16,17 @@ export default function printOwing(invoice) {
     today.getDate() + 30
   );
 
-  // print details
-  console.log(`customer name: ${invoice.customer}`);
-  console.log(`outstanding: ${outstanding}`);
-  console.log(`due date: ${invoice.dueDate.toLocaleDateString()}`);
+  printDetails();
 
   function printBanner() {
     console.log("****************");
     console.log("**** Owing by Customer ****");
     console.log("****************");
+  }
+
+  function printDetails() {
+    console.log(`customer name: ${invoice.customer}`);
+    console.log(`outstanding: ${outstanding}`);
+    console.log(`due date: ${invoice.dueDate.toLocaleDateString()}`);
   }
 }
