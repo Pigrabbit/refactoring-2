@@ -1,6 +1,6 @@
-import isNewEngland from "./newEngland";
+import inNewEngland from "./newEngland";
 
-describe("isNewEngland", () => {
+describe("inNewEngland", () => {
   it("returns if a state belongs to NewEngland", () => {
     const customers = [
       { name: "Aaron", address: { state: "NY" } },
@@ -9,7 +9,7 @@ describe("isNewEngland", () => {
       { name: "Chris", address: { state: "MA" } },
     ];
 
-    const newEnglanders = customers.filter((c) => isNewEngland(c));
+    const newEnglanders = customers.filter((c) => inNewEngland(c));
 
     expect(newEnglanders).toHaveLength(2);
   });

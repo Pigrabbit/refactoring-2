@@ -1,5 +1,4 @@
-export default function isNewEngland(aCustomer) {
-  return ["MA", "CT", "ME", "VT", "NH", "RI"].includes(
-    aCustomer.address.state
-  );
+export default function inNewEngland(aCustomer) {
+  const stateCode = aCustomer.address.state;
+  return ["MA", "CT", "ME", "VT", "NH", "RI"].includes(stateCode);
 }
