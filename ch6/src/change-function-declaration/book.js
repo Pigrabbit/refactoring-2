@@ -8,6 +8,10 @@ export default class Book {
   }
 
   addReservation(customer) {
+    this.refactor_addReservation(customer, false);
+  }
+
+  refactor_addReservation(customer, isPriority) {
     this._reservations.push(customer);
   }
 }
