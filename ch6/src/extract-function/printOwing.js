@@ -9,13 +9,7 @@ export default function printOwing(invoice) {
   }
 
   // record due date
-  const today = Clock.today;
-  invoice.dueDate = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() + 30
-  );
-
+  recordDueDate(invoice);
   printDetails(invoice, outstanding);
 
   function printBanner() {
@@ -29,4 +23,13 @@ function printDetails(invoice, outstanding) {
   console.log(`customer name: ${invoice.customer}`);
   console.log(`outstanding: ${outstanding}`);
   console.log(`due date: ${invoice.dueDate.toLocaleDateString()}`);
+}
+
+function recordDueDate(invoice) {
+  const today = Clock.today;
+  invoice.dueDate = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + 30
+  );
 }
