@@ -1,12 +1,8 @@
 export default function printOwing(invoice) {
-  let outstanding = 0;
-
   printBanner();
 
   // calculate outstanding
-  for (const o of invoice.orders) {
-    outstanding += o;
-  }
+  const outstanding = calculateOutstanding(invoice);
 
   // record due date
   recordDueDate(invoice);
@@ -32,4 +28,12 @@ function recordDueDate(invoice) {
     today.getMonth(),
     today.getDate() + 30
   );
+}
+
+function calculateOutstanding(invoice) {
+  let result = 0;
+  for (const o of invoice.orders) {
+    result += o;
+  }
+  return result;
 }
