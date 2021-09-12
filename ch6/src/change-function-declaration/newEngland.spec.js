@@ -1,4 +1,4 @@
-import inNewEngland from "./newEngland";
+import { refactor_inNewEngland } from "./newEngland";
 
 describe("inNewEngland", () => {
   it("returns if a state belongs to NewEngland", () => {
@@ -9,7 +9,9 @@ describe("inNewEngland", () => {
       { name: "Chris", address: { state: "MA" } },
     ];
 
-    const newEnglanders = customers.filter((c) => inNewEngland(c));
+    const newEnglanders = customers.filter((c) =>
+      refactor_inNewEngland(c.address.state)
+    );
 
     expect(newEnglanders).toHaveLength(2);
   });

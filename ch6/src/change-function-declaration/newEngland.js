@@ -1,7 +1,7 @@
-export default function inNewEngland(aCustomer) {
+export function inNewEngland(aCustomer) {
   return refactor_inNewEngland(aCustomer.address.state);
 }
 
-function refactor_inNewEngland(stateCode) {
+export function refactor_inNewEngland(stateCode) {
   return ["MA", "CT", "ME", "VT", "NH", "RI"].includes(stateCode);
 }
