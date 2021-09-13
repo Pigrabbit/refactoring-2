@@ -27,21 +27,16 @@ function taxThreshold(year) {
 export function getBaseCharge() {
   const rawReading = acquireReading();
   const aReading = new Reading(rawReading);
-  const baseCharge = aReading.baseCharge;
 
-  return baseCharge;
+  return aReading.baseCharge;
 }
 
 // Client 2
 export function getTaxableCharge() {
   const rawReading = acquireReading();
   const aReading = new Reading(rawReading);
-  const taxableCharge = Math.max(
-    0,
-    aReading.baseCharge - taxThreshold(aReading.year)
-  );
 
-  return taxableCharge;
+  return aReading.taxableCharge;
 }
 
 class Reading {
@@ -70,5 +65,9 @@ class Reading {
 
   get baseCharge() {
     return baseRate(this.month, this.year) * this.quantity;
+  }
+
+  get taxableCharge() {
+    return Math.max(0, this.baseCharge - taxThreshold(this.year));
   }
 }
