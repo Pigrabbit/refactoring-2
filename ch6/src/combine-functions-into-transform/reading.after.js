@@ -25,27 +25,31 @@ function taxThreshold(year) {
   return table[year];
 }
 
-function enrichReading(original) {
+function calculateBaseCharge(aReading) {
+  return baseRate(aReading.month, aReading.year) * aReading.quantity;
+}
+
+export function enrichReading(original) {
   const result = cloneDeep(original);
+  result.baseCharge = calculateBaseCharge(result);
   return result;
 }
 
 // Client 1
 export function getBaseCharge() {
   const rawReading = acquireReading();
-  const aReading = enrichReading(rawReading)
-  const baseCharge =
-    baseRate(aReading.month, aReading.year) * aReading.quantity;
+  const aReading = enrichReading(rawReading);
+  const baseCharge = aReading.baseCharge;
 
   return baseCharge;
 }
 
 // Client 2
 export function getTaxableCharge() {
-  const aReading = acquireReading();
-  const base = baseRate(aReading.month, aReading.year) * aReading.quantity;
+  const rawReading = acquireReading();
+  const aReading = enrichReading(rawReading);
+  const base = aReading.baseCharge;
   const taxableCharge = Math.max(0, base - taxThreshold(aReading.year));
 
   return taxableCharge;
 }
-
