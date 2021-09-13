@@ -1,4 +1,4 @@
-import { getBaseCharge, getTaxableCharge } from "./reading.before";
+import { getBaseCharge, getTaxableCharge } from "./reading.after";
 
 describe("getBaseCharge", () => {
   it("calculates base charge", () => {
