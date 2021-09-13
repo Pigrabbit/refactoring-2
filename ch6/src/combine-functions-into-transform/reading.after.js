@@ -39,17 +39,19 @@ export function enrichReading(original) {
 export function getBaseCharge() {
   const rawReading = acquireReading();
   const aReading = enrichReading(rawReading);
-  const baseCharge = aReading.baseCharge;
 
-  return baseCharge;
+  return aReading.baseCharge;
 }
 
 // Client 2
 export function getTaxableCharge() {
   const rawReading = acquireReading();
   const aReading = enrichReading(rawReading);
-  const base = aReading.baseCharge;
-  const taxableCharge = Math.max(0, base - taxThreshold(aReading.year));
+
+  const taxableCharge = Math.max(
+    0,
+    aReading.baseCharge - taxThreshold(aReading.year)
+  );
 
   return taxableCharge;
 }
