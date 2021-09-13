@@ -25,18 +25,50 @@ function taxThreshold(year) {
 
 // Client 1
 export function getBaseCharge() {
-  const aReading = acquireReading();
-  const baseCharge =
-    baseRate(aReading.month, aReading.year) * aReading.quantity;
+  const rawReading = acquireReading();
+  const aReading = new Reading(rawReading);
+  const baseCharge = aReading.baseCharge;
 
   return baseCharge;
 }
 
 // Client 2
 export function getTaxableCharge() {
-  const aReading = acquireReading();
-  const base = baseRate(aReading.month, aReading.year) * aReading.quantity;
-  const taxableCharge = Math.max(0, base - taxThreshold(aReading.year));
+  const rawReading = acquireReading();
+  const aReading = new Reading(rawReading);
+  const taxableCharge = Math.max(
+    0,
+    aReading.baseCharge - taxThreshold(aReading.year)
+  );
 
   return taxableCharge;
+}
+
+class Reading {
+  constructor({ customer, quantity, month, year }) {
+    this._customer = customer;
+    this._quantity = quantity;
+    this._month = month;
+    this._year = year;
+  }
+
+  get customer() {
+    return this._customer;
+  }
+
+  get quantity() {
+    return this._quantity;
+  }
+
+  get month() {
+    return this._month;
+  }
+
+  get year() {
+    return this._year;
+  }
+
+  get baseCharge() {
+    return baseRate(this.month, this.year) * this.quantity;
+  }
 }
