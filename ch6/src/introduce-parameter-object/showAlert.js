@@ -1,3 +1,5 @@
+import NumberRange from "./numberRange";
+
 export const station = {
   name: "ZB1",
   readings: [
@@ -9,8 +11,10 @@ export const station = {
   ],
 };
 
-function readingOutsideRange(station, min, max) {
-  return station.readings.filter((r) => r.temp < min || r.temp > max);
+function readingOutsideRange(station, range) {
+  return station.readings.filter(
+    (r) => r.temp < range.min || r.temp > range.max
+  );
 }
 
 export default function showAlert() {
@@ -18,10 +22,10 @@ export default function showAlert() {
     temperatureFloor: 50,
     temperatureCeiling: 55,
   };
-
-  return readingOutsideRange(
-    station,
+  const range = new NumberRange(
     operatingPlan.temperatureFloor,
     operatingPlan.temperatureCeiling
   );
+
+  return readingOutsideRange(station, range);
 }
